@@ -13,13 +13,17 @@ const colConf = {
     ],
     "works": [
         { title: "ID", field: "hit_id", visible: false },
-        { title: "Name", field: "name", headerFilter: "input", minWidth: 400 },
+        { title: "Title", field: "view_label", headerFilter: "input", minWidth: 400 },
         { title: "Author", field: "author", mutator: mutateM2mField, mutatorParams: { labelField: "name" }, headerFilter: "input" },
-        { title: "Manuscripts", field: "manuscripts", mutator: mutateM2mField, mutatorParams: { labelField: "value" }, headerFilter: "input" },
     ],
     "manuscripts": [
         { title: "ID", field: "hit_id", visible: false },
         { title: "Name", field: "view_label", headerFilter: "input", minWidth: 400 },
+    ],
+    "strata": [
+        { title: "ID", field: "hit_id", visible: false },
+        { title: "Name", field: "view_label", headerFilter: "input", minWidth: 400 },
+        { title: "Manuscript", field: "manuscript", mutator: mutateSelectField, headerFilter: "input", minWidth: 400 },
     ]
 }
 

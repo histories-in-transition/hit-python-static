@@ -17,4 +17,12 @@ MODEL_CONFIG = [
         "label_lookup_expression": "$..label[0].value",
         "related_objects": [],
     },
+    {
+        "data_source": "data/works",
+        "verbose_name_pl": "Works",
+        "verbose_name_sg": "Work",
+        "file_name": "works",
+        "label_lookup_expression": "$.title",
+        "related_objects": [],
+    },
 ]
