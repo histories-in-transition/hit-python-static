@@ -36,7 +36,7 @@ jobs:
           cache: 'pip'
       - run: pip install -r requirements.txt
       - name: Build the Website
-        run: python build_static.py
+        run: python build.py
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
