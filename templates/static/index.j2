@@ -5,13 +5,28 @@
 {% endblock page_description %}
 
 {% block content %}
-<div class="container">
-    <h1 class="text-center">{{ project_data.project_title }}</h1>
-    <div>
-        <p>
-            Hello my friend. Congrats for setting up <a href="https://github.com/acdh-oeaw/python-static-cookiecutter">python-static-cookiecutter</a>!
-        </p>
+<div class="container col-xxl-8 px-2">
+    <div class="row flex-lg-row align-items-center g-5 py-5">
+        <div class="col-lg-6">
+            <h1 class="display-5 text-body-emphasis lh-1 mb-3">
+                {{ project_data.project_title }}
+            </h1>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a href="search.html" type="button"
+                    class="btn btn-primary btn-lg px-4 me-md-2">Search
+                </a>
+                <a href="passages.html" type="button"
+                    class="btn btn-outline-secondary btn-lg px-4">Browse</a>
+                </div>
+        </div>
+        <div class="col-10 col-sm-8 col-lg-6">
+            <figure class="figure">
+            <img src="img/title-img.jpg" class="d-block mx-lg-auto img-fluid"
+                alt="Wien, Österreichische Nationalbibliothek (ÖNB), Cod. 387, fol. 90v." width="700" height="500" loading="lazy">
+                <figcaption class="figure-caption">Wien, Österreichische Nationalbibliothek (ÖNB), Cod. 387, fol. 90v.</figcaption>
+            </figure>
+        </div>
     </div>
-
+</div>
 
 {% endblock content %}

@@ -1,0 +1,16 @@
+{% extends "templates/partials/base.j2" %}
+{% block title %}{{ label }}{% endblock title %}
+{% block page_description %}
+<meta name="description" content="{{ label }}">
+{% endblock page_description %}
+
+
+{% block content %}
+{% include "templates/partials/breadcrumb.j2" %}
+<div class="container">
+{% include "templates/partials/detail_view_header.j2" %}
+{% block detail_view %} {% endblock %}
+</div>
+{% endblock content %}
+{% block scripts2 %}
+{% endblock scripts2 %}

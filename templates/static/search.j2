@@ -1,0 +1,49 @@
+{% extends "templates/partials/base.j2" %}
+{% block title %}Search the data{% endblock title %}
+{% block page_description %}
+<meta name="description" content="Faceted fulltext search">
+{% endblock page_description %}
+
+{% block content %}
+<nav class="ps-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Search</li>
+    </ol>
+</nav>
+<div class="container">
+     <div class="row">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 >Search</h1>
+            <div id="searchbox"></div>
+            <div id="stats-container"></div>
+            <div id="current-refinements"></div>
+            <div id="clear-refinements"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div>
+                <div id="refinement-list-author" class="pb-3"></div>
+                <div id="refinement-list-work" class="pb-3"></div>
+                <div id="refinement-list-workdate" class="pb-3"></div>
+                <div id="refinement-list-manuscript" class="pb-3"></div>
+                <div id="refinement-list-language" class="pb-3"></div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div id="pagination" class="p-3"></div>
+            <div id="hits"></div>
+            
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block scripts2 %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/algolia-min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.46.0"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/typesense-instantsearch-adapter@2/dist/typesense-instantsearch-adapter.min.js"></script>
+<script src="js/search.js"></script>
+{% endblock scripts2 %}
