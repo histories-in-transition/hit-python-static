@@ -41,10 +41,17 @@ def fetch_data():
 
         # add view_labels
         for _, value in data.items():
-            try:
-                value["view_label"] = jsonpath_expr.find(value)[0].value
-            except IndexError:
-                value["view_label"] = f"NO MATCH FOR {x['label_lookup_expression']}"
+            if x["file_name"] == "ms_items":
+                try:
+                    value["view_label"] = f'{value["manuscript"][0]["shelfmark"][0]["value"]}, {value["id"]}'
+                    print(value["view_label"])
+                except IndexError:
+                    value["view_label"] = "no manuscript realted to this item"
+            else:
+                try:
+                    value["view_label"] = jsonpath_expr.find(value)[0].value
+                except IndexError:
+                    value["view_label"] = f"NO MATCH FOR {x['label_lookup_expression']}"
         with open(save_path, "w", encoding="utf-8") as fp:
             json.dump(data, fp, ensure_ascii=False)
 
@@ -68,11 +75,11 @@ def add_related_objects():
                 feed_data = json.load(fp)
 
             for key, value in source_data.items():
-                jad_id = value[ID_FIELD]
+                object_id = value[ID_FIELD]
                 related_items = []
                 for _, rel_value in feed_data.items():
                     for m in rel_value[lookup_field]:
-                        if m[ID_FIELD] == jad_id:
+                        if m[ID_FIELD] == object_id:
                             related_items.append(
                                 {
                                     ID_FIELD: rel_value[ID_FIELD],

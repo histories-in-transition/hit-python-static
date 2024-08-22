@@ -1,3 +1,15 @@
+function mutateManuscriptLookup(value, data, type, params, component) {
+    try {
+        let output = value[0]["shelfmark"][0]["value"];
+        return `${output}`;
+    } catch (error) {
+        let output = "no related manuscript"
+        return output;
+    }
+    
+}
+
+
 const colConf = {
     "passages": [
         { title: "ID", field: "hit_id", visible: false },
@@ -24,6 +36,11 @@ const colConf = {
         { title: "ID", field: "hit_id", visible: false },
         { title: "Name", field: "view_label", headerFilter: "input", minWidth: 400 },
         { title: "Manuscript", field: "manuscript", mutator: mutateSelectField, headerFilter: "input", minWidth: 400 },
+    ],
+    "ms_items": [
+        { title: "ID", field: "hit_id", visible: false },
+        { title: "Name", field: "view_label", headerFilter: "input", minWidth: 400 },
+        { title: "Manuscript", field: "manuscript", mutator: mutateManuscriptLookup, headerFilter: "input", minWidth: 400 },
     ]
 }
 
