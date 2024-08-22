@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 import requests
 from jsonpath_ng import parse
 
@@ -13,6 +14,9 @@ GH_URL = (
     "https://raw.githubusercontent.com/histories-in-transition/hit-baserow-dump/main/"
 )
 DATA_DIR = os.path.join("html", "data")
+
+shutil.rmtree(DATA_DIR, ignore_errors=True)
+os.makedirs(DATA_DIR, exist_ok=True)
 
 
 def fetch_data():
@@ -43,8 +47,9 @@ def fetch_data():
         for _, value in data.items():
             if x["file_name"] == "ms_items":
                 try:
-                    value["view_label"] = f'{value["manuscript"][0]["shelfmark"][0]["value"]}, {value["id"]}'
-                    print(value["view_label"])
+                    value["view_label"] = (
+                        f'{value["manuscript"][0]["shelfmark"][0]["value"]}, {value["id"]}'
+                    )
                 except IndexError:
                     value["view_label"] = "no manuscript realted to this item"
             else:
@@ -92,6 +97,37 @@ def add_related_objects():
             json.dump(source_data, fp, ensure_ascii=True)
 
 
+def custom_enrichment():
+
+    with open(os.path.join(DATA_DIR, "ms_items.json"), "r") as fp:
+        source_data = json.load(fp)
+
+    with open(os.path.join(DATA_DIR, "hands.json"), "r") as fp:
+        seed_data = json.load(fp)
+
+    for key, value in source_data.items():
+        for x in value["hands_role"]:
+            new_value = []
+            for y in x["hand"]:
+                obj_id = f'{y["id"]}'
+
+                orig_hand = seed_data[obj_id]
+                hand = {
+                    "hit_id": orig_hand["hit_id"],
+                    "view_label": y["value"],
+                    "hands_dated": orig_hand["hands_dated"],
+                    "hands_placed": orig_hand["hands_placed"],
+                    "role": x["role"],
+                }
+
+                new_value.append(hand)
+            value["hands_role"] = new_value
+
+    with open(os.path.join(DATA_DIR, "ms_items.json"), "w") as fp:
+        json.dump(source_data, fp, ensure_ascii=False)
+
+
 if __name__ == "__main__":
     fetch_data()
+    custom_enrichment()
     add_related_objects()

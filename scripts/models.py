@@ -7,12 +7,7 @@ MODEL_CONFIG = [
         "verbose_name_sg": "Manuscript",
         "file_name": "manuscripts",
         "label_lookup_expression": "$..shelfmark[0].value",
-        "related_objects": [
-            {
-                "source_file": "ms_items",
-                "lookup_field": "manuscript"
-            }
-        ],
+        "related_objects": [{"source_file": "ms_items", "lookup_field": "manuscript"}],
     },
     {
         "data_source": "data/strata",
@@ -35,6 +30,14 @@ MODEL_CONFIG = [
         "verbose_name_pl": "Manuscript Items",
         "verbose_name_sg": "Manuscript Item",
         "file_name": "ms_items",
+        "label_lookup_expression": "$..label[0].value",
+        "related_objects": [],
+    },
+    {
+        "data_source": "data/hands",
+        "verbose_name_pl": "Hands",
+        "verbose_name_sg": "Hand",
+        "file_name": "hands",
         "label_lookup_expression": "$..label[0].value",
         "related_objects": [],
     },
