@@ -86,10 +86,7 @@ def add_related_objects():
                     for m in rel_value[lookup_field]:
                         if m[ID_FIELD] == object_id:
                             related_items.append(
-                                {
-                                    ID_FIELD: rel_value[ID_FIELD],
-                                    "view_label": rel_value["view_label"],
-                                }
+                                m
                             )
                             break
                 value[f"related__{source_file}"] = related_items
