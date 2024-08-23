@@ -15,11 +15,9 @@ GH_URL = (
 )
 DATA_DIR = os.path.join("html", "data")
 
-shutil.rmtree(DATA_DIR, ignore_errors=True)
-os.makedirs(DATA_DIR, exist_ok=True)
-
 
 def fetch_data():
+    shutil.rmtree(DATA_DIR, ignore_errors=True)
 
     os.makedirs(DATA_DIR, exist_ok=True)
 
@@ -86,7 +84,7 @@ def add_related_objects():
                     for m in rel_value[lookup_field]:
                         if m[ID_FIELD] == object_id:
                             related_items.append(
-                                m
+                                rel_value
                             )
                             break
                 value[f"related__{source_file}"] = related_items

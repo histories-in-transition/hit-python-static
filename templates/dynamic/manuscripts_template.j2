@@ -1,7 +1,141 @@
 {% extends "templates/partials/detail_view.j2" %}
 
 {% block detail_view %} 
+<hr>
+
+<dl class="p-3">
+    <dt>Holding Institution</dt>
+    
+    {% for x in data.library_full %}
+    <dd>
+        {{ x.library_full }}
+        <a href="{{ x.library_website }}">
+            <i class="bi bi-box-arrow-up-right fs-5" area-hidden="true"></i>
+            <span class="visually-hidden">link to {{ x.library_full }} website</span>
+        </a>
+    </dd>
+    {% endfor %}
+
+    <dt>
+        Extent
+    </dt>
+    <dd>{{ data.extent }}f; {{ data.height }} x {{ data.width }}</dd>
+
+    <dt>Foliation</dt>
+    <dd>{{ data.foliation }}</dd>
+
+    <dt>Binding</dt>
+    <dd>{{ data.binding }}</dd>
+    {% for x in data.binding_date %}
+    <dd>{{ x.value }}</dd>
+    {% endfor %}
+
+    <dt>History</dt>
+    <dd>{{ data.history }}</dd>
+
+    <dt>Material</dt>
+    <dd>{{ data.material.value }}</dd>
+    <dd>{{ data.material_spec }}</dd>
+
+    <dt>Location / Place of origin</dt>
+    {% for x in data.orig_place %}
+    <dd>
+        {{ x.name }}, {% for y in x.country %}{{ y.name }}{% endfor %}
+        <a href="{{ x.geonames_url }}">
+            <i class="bi bi-geo" area-hidden="true"></i>
+            <span class="visually-hidden">link to geoanmes entry for {{ x.name }}</span>
+        </a>
+    </dd>
+    {% endfor %}
+
+    <dt>Dated</dt>
+    {% for x in data.manuscripts_dated %}
+    <dd>
+        {% set date = x.date|first %}
+        {% set authority = x.authority|first %}
+        {{ date.label }} by {{ authority.name }}, <cite title>{{ authority.short_title }}</cite>, p. {{ x.page }}
+    </dd>
+    {% endfor %}
+
+    {% if data.content_summary %}
+    <dt>Summary</dt>
+    <dd>
+        {{ data.content_summary }}
+    </dd>
+    {% endif %}
+
+
+    <dt>further resources</dt>
+    {% if data.catalog_url %}
+    <dd>
+        <a href="{{ data.catalog_url }}">
+            <i class="bi bi-collection" area-hidden="true"></i>
+            <span class="visually-hidden">link to library catalog</span>
+            library catalog
+        </a>
+    </dd>
+    {% endif %}
+    {% if data.digi_url %}
+    <dd>
+        <a href="{{ data.digi_url }}">
+            <i class="bi bi-card-image" area-hidden="true"></i>
+            <span class="visually-hidden">link to facsimiles</span>
+            facsimiles
+        </a>
+    </dd>
+    {% endif %}
+    {% if data.manuscripta_url %}
+    <dd>
+        <a href="{{ data.manuscripta_url }}">
+            <i class="bi bi-collection" area-hidden="true"></i>
+            <span class="visually-hidden">link to manuscripta.at</span>
+            manuscripta.at
+        </a>
+    </dd>
+    {% endif %}
+    {% if data.handschriftenportal_url %}
+    <dd>
+        <a href="{{ data.handschriftenportal_url }}">
+            <i class="bi bi-collection" area-hidden="true"></i>
+            <span class="visually-hidden">link to handschriftenportal.at</span>
+            handschriftenportal.at
+        </a>
+    </dd>
+    {% endif %}
+</dl>
+
+<hr>
+<h3>MS Items</h3>
+<dl>
+    {% for x in data.related__ms_items %}
+    {% set work = x.title_work|first %}
+    <dt>{{ x.locus_grp }}</dt>
+    <dd>
+        <dl>
+        {% if work %}
+            <dt>work</dt>
+            <dd> {{ work.title }}</dd>
+        {% endif %}
+
+        {% if x.incipit %}
+            <dt>incipit</dt>
+            <dd>{{ x.incipit }}</dd>
+        {% endif %}
+
+        {% if x.explicit %}
+            <dt>explicit</dt>
+            <dd><{{ x.explicit }}</dd>
+        {% endif %}
+
+        </dl>
+    </dd>
+    {% endfor %}
+</dl>
+
+
+<div class="p-5">
 {{ data }}
+</div>
 {% endblock detail_view %}
 {% block scripts2 %}
 {% endblock scripts2 %}
