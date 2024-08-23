@@ -2,6 +2,7 @@
 
 {% block detail_view %} 
 <hr>
+<h3>About</h3>
 
 <dl class="p-3">
     <dt>Holding Institution</dt>
@@ -106,36 +107,17 @@
 
 <hr>
 <h3>MS Items</h3>
-<dl>
+<ul>
     {% for x in data.related__ms_items %}
     {% set work = x.title_work|first %}
-    <dt>{{ x.locus_grp }}</dt>
-    <dd>
-        <dl>
-        {% if work %}
-            <dt>work</dt>
-            <dd> {{ work.title }}</dd>
-        {% endif %}
-
-        {% if x.incipit %}
-            <dt>incipit</dt>
-            <dd>{{ x.incipit }}</dd>
-        {% endif %}
-
-        {% if x.explicit %}
-            <dt>explicit</dt>
-            <dd><{{ x.explicit }}</dd>
-        {% endif %}
-
-        </dl>
-    </dd>
+    <li>
+        <a href="{{ x.hit_id }}.html">{{ x.locus_grp }}</a> <span class="fw-lighter">|</span> 
+        <span class="fs- fw-lighter">work: </span> {% if work %}<a href="{{ work.hit_id }}.html">{{ work.title }}</a>{% else %} — {% endif %} <span>|</span>
+        <span class="fw-lighter">incipit: </span>{% if x.incipit %} {{ x.incipit }} {% else %} — {% endif %} <span>|</span> 
+        <span class="fw-lighter">explicit: </span>{% if x.explicit %} {{ x.explicit }} {% else %} — {% endif %}
+    </li>      
     {% endfor %}
-</dl>
-
-
-<div class="p-5">
-{{ data }}
-</div>
+</ul>
 {% endblock detail_view %}
 {% block scripts2 %}
 {% endblock scripts2 %}
