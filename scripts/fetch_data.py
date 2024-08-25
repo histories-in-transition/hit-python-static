@@ -59,6 +59,23 @@ def fetch_data():
             json.dump(data, fp, ensure_ascii=False)
 
 
+def remove_fields():
+    for x in MODEL_CONFIG:
+        try:
+            to_delete = x["delete_fields"]
+        except KeyError:
+            continue
+        save_path = os.path.join(DATA_DIR, f'{x["file_name"]}.json')
+        for field_path in to_delete:
+            print(f"removing {field_path} from {save_path}")
+            with open(save_path, "r") as fp:
+                source_data = json.load(fp)
+            jsonpath_expr = parse(field_path)
+            cleaned_data = jsonpath_expr.filter(lambda d: True, source_data)
+            with open(save_path, "w", encoding="utf-8") as fp:
+                json.dump(cleaned_data, fp, ensure_ascii=True)
+
+
 def add_related_objects():
     for x in MODEL_CONFIG:
         try:
@@ -83,9 +100,7 @@ def add_related_objects():
                 for _, rel_value in feed_data.items():
                     for m in rel_value[lookup_field]:
                         if m[ID_FIELD] == object_id:
-                            related_items.append(
-                                rel_value
-                            )
+                            related_items.append(rel_value)
                             break
                 value[f"related__{source_file}"] = related_items
         with open(save_path, "w", encoding="utf-8") as fp:
@@ -122,7 +137,12 @@ def custom_enrichment():
         json.dump(source_data, fp, ensure_ascii=False)
 
 
-if __name__ == "__main__":
+def process_data():
     fetch_data()
+    remove_fields()
     custom_enrichment()
     add_related_objects()
+
+
+if __name__ == "__main__":
+    process_data()

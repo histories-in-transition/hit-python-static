@@ -164,3 +164,4 @@ jupyter*
 html/data/*.json
 play.ipynb
 hansi.json
+play.py

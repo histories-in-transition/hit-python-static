@@ -40,5 +40,6 @@ MODEL_CONFIG = [
         "file_name": "hands",
         "label_lookup_expression": "$..label[0].value",
         "related_objects": [],
+        "delete_fields": ["$..order", "$..hands_role[*]..ms_item[*]..manuscript"],
     },
 ]

@@ -1,4 +1,4 @@
-from scripts.fetch_data import fetch_data, add_related_objects, custom_enrichment
+from scripts.fetch_data import process_data
 from scripts.build_static import build_static
 
 from scripts.build_dynamic import build_dynamic
@@ -6,9 +6,7 @@ from scripts.list_views import build_list_views
 
 # from scripts.fulltext_index import fulltext_index
 
-fetch_data()
-add_related_objects()
-custom_enrichment()
+process_data()
 build_static()
 build_dynamic()
 build_list_views()
