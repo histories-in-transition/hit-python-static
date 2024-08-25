@@ -41,6 +41,10 @@ const colConf = {
         { title: "ID", field: "hit_id", visible: false },
         { title: "Name", field: "view_label", headerFilter: "input", minWidth: 400 },
         { title: "Manuscript", field: "manuscript", mutator: mutateManuscriptLookup, headerFilter: "input", minWidth: 400 },
+    ],
+    "hands": [
+        { title: "ID", field: "hit_id", visible: false },
+        { title: "Name", field: "view_label", headerFilter: "input", minWidth: 400 },
     ]
 }
 

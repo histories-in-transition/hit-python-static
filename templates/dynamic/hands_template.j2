@@ -1,0 +1,82 @@
+{% extends "templates/partials/detail_view.j2" %}
+
+{% block detail_view %} 
+<hr>
+<h3>About</h3>
+<dl>
+    <dt>
+        Manuscript
+    </dt>
+    <dd>
+        <a href="{{ data.manuscript.hit_id }}">{{ data.view_label }}</a>
+    </dd>
+    
+    
+    {% if data.hands_dated %}
+    <dt>Datiert</dt>
+        {% for x in data.hands_dated %}
+            <dd>
+                {% for date in x.dated %} {{ date.label }} {% endfor %}
+                {% for auth in x.authority %}
+                    <span class="fw-light">
+                        ({{ auth.name }}, {{ auth.short_title }}, S. {{ x.page }})
+                    </span>
+                {% endfor %}
+            </dd>
+        {% endfor %}
+    {% else %}
+    <dt>Datiert</dt>
+    <dd>undatiert</dd>
+    {% endif %}
+
+    {% if data.hands_placed %}
+    <dt>Lokalisiert</dt>
+        {% for x in data.hands_placed %}
+            <dd>
+                {% for place in x.place %}
+                    {{ place.name }}
+                    <a href="{{ place.geonames_url }}">
+                        <i class="bi bi-geo" area-hidden="true"></i>
+                        <span class="visually-hidden">link to geoanmes entry for {{ place.name }}</span>
+                    </a>
+                {% endfor %}
+                {% for auth in x.authority %}
+                    <span class="fw-light">
+                        ({{ auth.name }}, {{ auth.short_title }}, S. {{ x.page }})
+                    </span>
+                {% endfor %}
+            </dd>
+        {% endfor %}
+    {% else %}
+    <dt>Lokalisiert</dt>
+    <dd>undatiert</dd>
+    {% endif %}
+
+    <hr>
+
+    <h3 class="pt-3">Rolle(n) der Hand</h3>
+    <ul>
+        {% for x in data.hands_role %}
+            {% set ms_item = x.ms_item|first %}
+            {% set role = x.role|first %}
+            {% set text = ms_item.title_work|first %}
+            <li>
+                {{ role.value }} | {{ text.title }}
+                (
+                <a href="{{ ms_item.hit_id }}.html">
+                    <i class="bi bi-box-arrow-up-right" area-hidden="true"></i>
+                    <span class="visually-hidden">link to the manuscript item</span>
+                </a>
+                )
+            </li>
+        {% endfor %}
+    </ul>
+    
+
+    
+</dl>
+
+<div class="p5-5">
+    <code>{{ data }}</data>
+</div>
+{% endblock detail_view%}
