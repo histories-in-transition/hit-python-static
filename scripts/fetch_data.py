@@ -59,23 +59,6 @@ def fetch_data():
             json.dump(data, fp, ensure_ascii=False)
 
 
-def remove_fields():
-    for x in MODEL_CONFIG:
-        try:
-            to_delete = x["delete_fields"]
-        except KeyError:
-            continue
-        save_path = os.path.join(DATA_DIR, f'{x["file_name"]}.json')
-        for field_path in to_delete:
-            print(f"removing {field_path} from {save_path}")
-            with open(save_path, "r") as fp:
-                source_data = json.load(fp)
-            jsonpath_expr = parse(field_path)
-            cleaned_data = jsonpath_expr.filter(lambda d: True, source_data)
-            with open(save_path, "w", encoding="utf-8") as fp:
-                json.dump(cleaned_data, fp, ensure_ascii=True)
-
-
 def add_related_objects():
     for x in MODEL_CONFIG:
         try:
@@ -109,6 +92,7 @@ def add_related_objects():
 
 def custom_enrichment():
 
+    print("enriching ms items with hand data")
     with open(os.path.join(DATA_DIR, "ms_items.json"), "r") as fp:
         source_data = json.load(fp)
 
@@ -136,11 +120,46 @@ def custom_enrichment():
     with open(os.path.join(DATA_DIR, "ms_items.json"), "w") as fp:
         json.dump(source_data, fp, ensure_ascii=False)
 
+    print("enriching hands with manuscript data")
+    with open(os.path.join(DATA_DIR, "hands.json"), "r") as fp:
+        source_data = json.load(fp)
+
+    with open(os.path.join(DATA_DIR, "manuscripts.json"), "r") as fp:
+        seed_data = json.load(fp)
+
+    for key, value in source_data.items():
+        try:
+            old_value = value["manuscript"][0]["id"]
+        except (IndexError, KeyError):
+            continue
+        new_value = seed_data[f"{old_value}"]
+        value["manuscript"] = new_value
+
+    with open(os.path.join(DATA_DIR, "hands.json"), "w") as fp:
+        json.dump(source_data, fp, ensure_ascii=False)
+
+
+def remove_fields():
+    for x in MODEL_CONFIG:
+        try:
+            to_delete = x["delete_fields"]
+        except KeyError:
+            continue
+        save_path = os.path.join(DATA_DIR, f'{x["file_name"]}.json')
+        for field_path in to_delete:
+            print(f"removing {field_path} from {save_path}")
+            with open(save_path, "r") as fp:
+                source_data = json.load(fp)
+            jsonpath_expr = parse(field_path)
+            cleaned_data = jsonpath_expr.filter(lambda d: True, source_data)
+            with open(save_path, "w", encoding="utf-8") as fp:
+                json.dump(cleaned_data, fp, ensure_ascii=True)
+
 
 def process_data():
     fetch_data()
-    remove_fields()
     custom_enrichment()
+    remove_fields()
     add_related_objects()
 
 
