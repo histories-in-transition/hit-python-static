@@ -16,6 +16,13 @@ MODEL_CONFIG = [
         "file_name": "strata",
         "label_lookup_expression": "$..label[0].value",
         "related_objects": [],
+        "delete_fields": [
+            "$..order",
+            "$.*.ms_items",
+            "$.*.quires",
+            "$.*.locus",
+            "$.*.hand_role[*].ms_item[*].manuscript",
+        ],
     },
     {
         "data_source": "data/works",

@@ -117,8 +117,23 @@ def custom_enrichment():
                 new_value.append(hand)
             value["hands_role"] = new_value
 
-    with open(os.path.join(DATA_DIR, "ms_items.json"), "w") as fp:
-        json.dump(source_data, fp, ensure_ascii=False)
+    # print("enriching strata with hand data")
+    # with open(os.path.join(DATA_DIR, "strata.json"), "r") as fp:
+    #     source_data = json.load(fp)
+
+    # with open(os.path.join(DATA_DIR, "hands.json"), "r") as fp:
+    #     seed_data = json.load(fp)
+
+    # for key, value in source_data.items():
+    #     for y in value["hand_role"]:
+    #         try:
+    #             old_value = y["hand"][0]["id"]
+    #         except (IndexError, KeyError):
+    #             continue
+    #         y["hand"] = seed_data[f"{old_value}"]
+
+    # with open(os.path.join(DATA_DIR, "strata.json"), "w") as fp:
+    #     json.dump(source_data, fp, ensure_ascii=False)
 
     print("enriching hands with manuscript data")
     with open(os.path.join(DATA_DIR, "hands.json"), "r") as fp:
