@@ -109,25 +109,43 @@
 </dl>
 
 <hr>
-<h3>Content</h3>
 {% for x in data.related__cod_units %}
-    
-    <h4>Unit {{ x.id }}</h4>
+       
+    <div class="text-center">
+        <h4>Codicological unit {{ x.number }} {% if x.locus %}= fols. {{ x.locus }}{% endif %}</h4>
+        <p>
+           {% for y in x.prov_place %}
+           {{ y.name }}
+           {% endfor %}
+        </p>
+    </div>
 
-    <h5>Lagen</h5>
+    <!-- <h5>Lagen</h5>
     <ul>
     {% for q in x.quire %}
         <li>
         {{ q.locus }} | {{ q.quire_structure }}{{ q.written }} | {{ q.ruling }} | {{ q.decoration }}
         </li>
     {% endfor %}
-    </ul>
+    </ul> -->
 
-    <h5>MS-Items</h5>
+    <h5 class="text-center">MS-Items</h5>
     <ul>
-    {% for q in x.related__ms_items %}
+    {% for y in x.related__ms_items %}
         <li>
-        {{ q.locus_grp }} |
+        ({{ y.locus_grp }})
+        {% for t in y.title_work %}<span class="caps"> {{ t.title }}</span>
+            {% for t in y.title_work %}
+                <a href="{{ t.hit_id }}.html" class="small">
+                    <i class="bi bi-box-arrow-up-right" area-hidden="true"></i>
+                    <span class="visually-hidden">link to detail view for {{ t.title }}</span>
+                </a>
+            {% endfor %}
+        {% endfor %}
+          
+        {% if y.rubric %} ›<span class="fst-italic">{{ y.rubric }}</span>‹{% endif %}
+        {% if y.incipit %} <span class="fst-italic">{{ y.incipit }}</span>{% endif %}
+        {% if y.explicit %} — <span class="fst-italic">{{ y.explicit }}</span>{% endif %}
         </li>
     {% endfor %}
     </ul>

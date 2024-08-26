@@ -1,3 +1,6 @@
 dd {
     padding-left: 25px;
 }
+.caps {
+    font-variant: small-caps;
+}

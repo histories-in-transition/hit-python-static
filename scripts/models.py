@@ -7,12 +7,7 @@ MODEL_CONFIG = [
         "verbose_name_sg": "Manuscript",
         "file_name": "manuscripts",
         "label_lookup_expression": "$..shelfmark[0].value",
-        "related_objects": [
-            {
-                "source_file": "cod_units",
-                "lookup_field": "manuscript"
-            }
-        ],
+        "related_objects": [{"source_file": "cod_units", "lookup_field": "manuscript"}],
     },
     {
         "data_source": "data/strata",
@@ -73,7 +68,7 @@ MODEL_CONFIG = [
             "$..order",
             "$.*.quire[*].manuscript",
             "$.*.related__ms_items[*].manuscript",
-            "$.*.related__ms_items[*].cod_unit"
+            "$.*.related__ms_items[*].cod_unit",
         ],
     },
 ]
