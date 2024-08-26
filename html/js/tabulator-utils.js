@@ -3,7 +3,7 @@ function mutateSelectField(value, data, type, params, component) {
         .map((item) => {
             return `${item.value}`;
         })
-        .join("/");
+        .join(" / ");
     return `${output}`;
 }
 
@@ -25,4 +25,12 @@ function mutateM2mField(value, data, type, params, component) {
     return names.join(" ")
 
 
+}
+
+function getKeyOrDefault(jsonObj, key) {
+    if (jsonObj.hasOwnProperty(key)) {
+        return {groupBy: jsonObj[key]};
+    } else {
+        return {};
+    }
 }

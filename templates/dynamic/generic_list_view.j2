@@ -16,6 +16,7 @@
 </nav>
 <div class="container">
     <h1 class="text-center">Browse {{ data.verbose_name_pl }}</h1>
+    <h2 class="text-center">Showing <span id="counter1"></span> out of <span id="counter2"></span> {{ data.verbose_name_pl }}</h2>
     <div id="tabulator-table">
         
     </div>
@@ -27,6 +28,7 @@
 <script>
 const dataUrl = "data/{{ data.file_name }}.json"
 const configKey = "{{ data.file_name }}"
+const groupKey = "{{ data.file_name }}"
 </script>
 <script type="module" src="js/tabulator.js"></script>
 
