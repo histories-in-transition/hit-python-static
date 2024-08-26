@@ -7,7 +7,12 @@ MODEL_CONFIG = [
         "verbose_name_sg": "Manuscript",
         "file_name": "manuscripts",
         "label_lookup_expression": "$..shelfmark[0].value",
-        "related_objects": [{"source_file": "ms_items", "lookup_field": "manuscript"}],
+        "related_objects": [
+            {
+                "source_file": "cod_units",
+                "lookup_field": "manuscript"
+            }
+        ],
     },
     {
         "data_source": "data/strata",
@@ -47,6 +52,28 @@ MODEL_CONFIG = [
         "file_name": "hands",
         "label_lookup_expression": "$..label[0].value",
         "related_objects": [],
-        "delete_fields": ["$..order", "$..hands_role[*]..ms_item[*]..manuscript"],
+        "delete_fields": [
+            "$..order",
+            "$..hands_role[*]..ms_item[*]..manuscript",
+        ],
+    },
+    {
+        "data_source": "data/cod_units",
+        "verbose_name_pl": "Codicological Units",
+        "verbose_name_sg": "Codicological Unit",
+        "file_name": "cod_units",
+        "label_lookup_expression": "$..label[0].value",
+        "related_objects": [
+            {
+                "source_file": "ms_items",
+                "lookup_field": "cod_unit",
+            },
+        ],
+        "delete_fields": [
+            "$..order",
+            "$.*.quire[*].manuscript",
+            "$.*.related__ms_items[*].manuscript",
+            "$.*.related__ms_items[*].cod_unit"
+        ],
     },
 ]

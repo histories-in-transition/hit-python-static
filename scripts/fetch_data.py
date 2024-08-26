@@ -78,11 +78,11 @@ def add_related_objects():
                 feed_data = json.load(fp)
 
             for key, value in source_data.items():
-                object_id = value[ID_FIELD]
+                object_id = value["id"]
                 related_items = []
                 for _, rel_value in feed_data.items():
                     for m in rel_value[lookup_field]:
-                        if m[ID_FIELD] == object_id:
+                        if m["id"] == object_id:
                             related_items.append(rel_value)
                             break
                 value[f"related__{source_file}"] = related_items
@@ -174,6 +174,8 @@ def remove_fields():
 def process_data():
     fetch_data()
     custom_enrichment()
+    remove_fields()
+    add_related_objects()
     remove_fields()
     add_related_objects()
 

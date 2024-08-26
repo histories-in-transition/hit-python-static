@@ -109,18 +109,31 @@
 </dl>
 
 <hr>
-<h3>MS Items</h3>
-<ul>
-    {% for x in data.related__ms_items %}
-    {% set work = x.title_work|first %}
-    <li>
-        <a href="{{ x.hit_id }}.html">{{ x.locus_grp }}</a> <span class="fw-lighter">|</span> 
-        <span class="fs- fw-lighter">work: </span> {% if work %}<a href="{{ work.hit_id }}.html">{{ work.title }}</a>{% else %} — {% endif %} <span>|</span>
-        <span class="fw-lighter">incipit: </span>{% if x.incipit %} {{ x.incipit }} {% else %} — {% endif %} <span>|</span> 
-        <span class="fw-lighter">explicit: </span>{% if x.explicit %} {{ x.explicit }} {% else %} — {% endif %}
-    </li>      
+<h3>Content</h3>
+{% for x in data.related__cod_units %}
+    
+    <h4>Unit {{ x.id }}</h4>
+
+    <h5>Lagen</h5>
+    <ul>
+    {% for q in x.quire %}
+        <li>
+        {{ q.locus }} | {{ q.quire_structure }}{{ q.written }} | {{ q.ruling }} | {{ q.decoration }}
+        </li>
     {% endfor %}
-</ul>
+    </ul>
+
+    <h5>MS-Items</h5>
+    <ul>
+    {% for q in x.related__ms_items %}
+        <li>
+        {{ q.locus_grp }} |
+        </li>
+    {% endfor %}
+    </ul>
+
+
+{% endfor %}
 {% endblock detail_view %}
 {% block scripts2 %}
 {% endblock scripts2 %}
