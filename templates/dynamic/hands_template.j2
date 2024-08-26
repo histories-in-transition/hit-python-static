@@ -62,7 +62,7 @@
             {% set text = ms_item.title_work|first %}
             <li>
                 {{ role.value }} | {{ text.title }}
-                (
+                ({{ data.manuscript.view_label }}, {{ ms_item.locus_grp }}
                 <a href="{{ ms_item.hit_id }}.html">
                     <i class="bi bi-box-arrow-up-right" area-hidden="true"></i>
                     <span class="visually-hidden">link to the manuscript item</span>
