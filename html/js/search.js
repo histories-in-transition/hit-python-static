@@ -175,6 +175,24 @@ search.addWidgets([
         cssClasses: DEFAULT_CSS_CLASSES,
     }),
 
+    instantsearch.widgets.panel({
+        collapsed: ({ state }) => {
+            return state.query.length === 0;
+        },
+        templates: {
+            header: 'Dated by Manuscript',
+        },
+    })(instantsearch.widgets.refinementList)({
+        container: "#refinement-list-ms-dates ",
+        attribute: "manuscript.dated.label",
+        searchable: true,
+        showMore: true,
+        showMoreLimit: 50,
+        limit: 10,
+        searchablePlaceholder: "Search for works",
+        cssClasses: DEFAULT_CSS_CLASSES,
+    }),
+
     
   
 

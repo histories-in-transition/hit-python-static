@@ -67,6 +67,17 @@ def fulltext_index():
             "hit_id": slib["hit_id"],
         }
         item["manuscript"] = ms
+        dates = []
+        for x in sms["manuscripts_dated"]:
+            for y in x["date"]:
+                dates.append(
+                    {
+                        "not_before": y["not_before"],
+                        "not_after": y["not_after"],
+                        "label": y["label"],
+                    }
+                )
+        ms["dated"] = dates
         try:
             swork = value["title_work"][0]
         except IndexError:
