@@ -50,7 +50,7 @@ def fulltext_index():
             title_work = f'{value["title_work"][0]["title"]}'
         except IndexError:
             title_work = ""
-        item["full_text"] = f'{value["incipit"]} {value["explicit"]} {value["rubric"]} {title_work}'   # noqa: E501
+        item["full_text"] = f'{value["incipit"]} {value["explicit"]} {value["rubric"]} {title_work}'.strip()   # noqa: E501
         ms = {}
         try:
             sms = value["manuscript"][0]
