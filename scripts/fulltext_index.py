@@ -50,7 +50,9 @@ def fulltext_index():
             title_work = f'{value["title_work"][0]["title"]}'
         except IndexError:
             title_work = ""
-        item["full_text"] = f'{value["incipit"]} {value["explicit"]} {value["rubric"]} {title_work}'.strip()   # noqa: E501
+        item["full_text"] = (
+            f'{value["incipit"]} {value["explicit"]} {value["rubric"]} {title_work}'.strip()
+        )  # noqa: E501
         ms = {}
         try:
             sms = value["manuscript"][0]
@@ -62,7 +64,7 @@ def fulltext_index():
         ms["library"] = {
             "abbr": slib["label"],
             "name": slib["library_full"],
-            "hit_id": slib["hit_id"]
+            "hit_id": slib["hit_id"],
         }
         item["manuscript"] = ms
         try:
