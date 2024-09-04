@@ -49,7 +49,7 @@ def fetch_data():
                         f'{value["manuscript"][0]["shelfmark"][0]["value"]}, {value["id"]}'
                     )
                 except IndexError:
-                    value["view_label"] = "no manuscript realted to this item"
+                    value["view_label"] = "no manuscript related to this item"
             else:
                 try:
                     value["view_label"] = jsonpath_expr.find(value)[0].value
