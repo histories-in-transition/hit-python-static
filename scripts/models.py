@@ -30,7 +30,7 @@ MODEL_CONFIG = [
         "verbose_name_sg": "Work",
         "file_name": "works",
         "label_lookup_expression": "$.title",
-        "related_objects": [],
+        "related_objects": [{"source_file": "ms_items", "lookup_field": "title_work"}],
     },
     {
         "data_source": "data/ms_items",

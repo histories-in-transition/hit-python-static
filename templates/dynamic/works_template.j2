@@ -1,41 +1,41 @@
 {% extends "templates/partials/detail_view.j2" %}
 
 {% block detail_view %}
-<dl class="text-center">
+<hr>
+<h3>About</h3>
+<dl>
+    {% if data.author %}
     <dt>Author</dt>
     {% for x in data.author %}
-    <dd><a href="{{ x.jad_id }}.html">{{ x.name }}</a></dd>
+    <dd><a href="{{ x.hit_id }}.html">{{ x.name }}</a></dd>
     {% endfor %}
+    {% endif %}
+
+    {% if data.genre %}
     <dt>Genre</dt>
-    <dd>{{ data.genre.value }}</dd>
-    {% if data.manuscripts %}
-    <dt>Date of origin</dt>
-    <dd>{{ data.written_date }}</dd>
-    {% endif %}
-    {% if data.manuscripts %}
-    <dt>manuscripts</dt>
-    {% for x in data.manuscripts %}
-    <dd><a href="jad_manuscript__{{ x.id }}.html">{{ x.value }}</a></dd>
+    {% for x in data.genre %}
+    <dd>{{ x.genre }}</dd>
     {% endfor %}
     {% endif %}
-    <dt>published in</dt>
-    {% for x in data.published_edition %}
-    <dd>
-        <a href="{{ x.digi_url }}">{{ x.name }}</a>
-    </dd>
-    {% endfor %}
 </dl>
 
-{% if data.related__passages %}
-<div class="text-center">
-    <h2>Passages</h2>
-    {% for x in data.related__passages %}
-    <blockquote class="blockquote">
-        <p>{{ x.view_label }} <a href="{{ x.jad_id }}.html"><span class="visually-hidden">go to detail view of passage {{ x.jad_id }}</span><i class="bi bi-blockquote-left p-2" aria-hidden="true"></i></a></p>
-    </blockquote>
-{% endfor %}
+<h3>mentioned in</h3>
+<ul>
+    {% for ms_item in data.related__ms_items %}
+    <li>
+        {% for ms in ms_item.manuscript %}
+            {% for x in ms.shelfmark %}
+                <a href="{{ ms_item.hit_id }}.html">{{ x.value }}
+            {% endfor %}
+        {% endfor %} | 
+        {{ ms_item.locus_grp }}</a> | 
+        {% if ms_item.rubric %} ›<span class="fst-italic">{{ ms_item.rubric }}</span>‹{% endif %}
+        {% if ms_item.incipit %} <span class="fst-italic">{{ ms_item.incipit }}</span>{% endif %}
+        {% if ms_item.explicit %} — <span class="fst-italic">{{ ms_item.explicit }}</span>{% endif %}
+    </li>
+    {% endfor %}
+</ul>
 </div>
-{% endif %}
 {% endblock detail_view %}
 {% block scripts2 %}
 {% endblock scripts2 %}
