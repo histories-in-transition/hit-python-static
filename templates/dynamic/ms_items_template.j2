@@ -7,9 +7,15 @@
     <dt>
         Manuscript
     </dt>
-    <dd>
-        <a href="{{ data.manuscript.hit_id }}">{{ data.view_label }}</a>
-    </dd>
+    {% for manuscript in data.manuscript %}
+        <dd>
+            <a href="{{ manuscript.hit_id }}.html">
+            {% for x in manuscript.shelfmark %}
+                {{ x.value }}
+            {% endfor %}
+            </a>
+        </dd>
+    {% endfor %}
 
     <dt>
         Location in Manuscript
@@ -52,11 +58,11 @@
 <h3>Hands</h3>
 <ul>
     {% for x in data.hands_role %}
-    {% set hand = x.hand|first %}
-    {% set role = x.role|first %}
-    <li>
-        <a href="hit_hands__{{ hand.id }}.html">{{ hand.value }}</a>; {{ role.value }}
-    </li>
+        {% for hand in x.hand %}
+            <li>
+                <a href="hit_hands__{{ hand.id }}.html">{{ hand.value }}</a>; {% for role in x.role %} {{ role.value }}{% endfor %}
+            </li>
+        {% endfor %}
     {% endfor %}
 
 </ul>
