@@ -33,6 +33,8 @@ def fulltext_index():
             {"name": "rubric", "type": "string", "optional": True},
             {"name": "manuscript", "type": "object", "facet": True, "optional": True},
             {"name": "work", "type": "object", "facet": True, "optional": True},
+            {"name": "hand_roles", "type": "string[]", "facet": True, "optional": True},
+            {"name": "hand_dates", "type": "string[]", "facet": True, "optional": True},
         ],
     }
     client.collections.create(current_schema)
@@ -78,6 +80,11 @@ def fulltext_index():
                     }
                 )
         ms["dated"] = dates
+        hand_roles = []
+        for x in value["hands_role"]:
+            for y in x["role"]:
+                hand_roles.append(y["value"])
+        item["hand_roles"] = hand_roles
         try:
             swork = value["title_work"][0]
         except IndexError:
