@@ -193,6 +193,42 @@ search.addWidgets([
         cssClasses: DEFAULT_CSS_CLASSES,
     }),
 
+    instantsearch.widgets.panel({
+        collapsed: ({ state }) => {
+            return state.query.length === 0;
+        },
+        templates: {
+            header: 'Role of Hands',
+        },
+    })(instantsearch.widgets.refinementList)({
+        container: "#refinement-list-hand-roles",
+        attribute: "hand_roles",
+        searchable: true,
+        showMore: true,
+        showMoreLimit: 50,
+        limit: 10,
+        searchablePlaceholder: "Search for roles",
+        cssClasses: DEFAULT_CSS_CLASSES,
+    }),
+
+    instantsearch.widgets.panel({
+        collapsed: ({ state }) => {
+            return state.query.length === 0;
+        },
+        templates: {
+            header: 'Date of Hands',
+        },
+    })(instantsearch.widgets.refinementList)({
+        container: "#refinement-list-hand-dates",
+        attribute: "hand_dates",
+        searchable: true,
+        showMore: true,
+        showMoreLimit: 50,
+        limit: 10,
+        searchablePlaceholder: "Search for dates",
+        cssClasses: DEFAULT_CSS_CLASSES,
+    }),
+
     
   
 

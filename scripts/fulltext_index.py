@@ -15,6 +15,9 @@ def fulltext_index():
     COLLECTION_NAME = "hit__msitems"
     print(f"building typesense index for {COLLECTION_NAME} with fulltext index")
 
+    with open(os.path.join(DATA_DIR, "hands.json"), "r", encoding="utf-8") as f:
+        hands_lookup = json.load(f)
+
     try:
         client.collections[COLLECTION_NAME].delete()
     except ObjectNotFound:
@@ -33,6 +36,8 @@ def fulltext_index():
             {"name": "rubric", "type": "string", "optional": True},
             {"name": "manuscript", "type": "object", "facet": True, "optional": True},
             {"name": "work", "type": "object", "facet": True, "optional": True},
+            {"name": "hand_roles", "type": "string[]", "facet": True, "optional": True},
+            {"name": "hand_dates", "type": "string[]", "facet": True, "optional": True},
         ],
     }
     client.collections.create(current_schema)
@@ -78,6 +83,21 @@ def fulltext_index():
                     }
                 )
         ms["dated"] = dates
+        hand_roles = []
+        hand_dates = []
+        for x in value["hands_role"]:
+            hand_id = str(x["hand"][0]["id"])
+            hand = hands_lookup[hand_id]
+            for date in hand["hands_dated"]:
+                for y in date["dated"]:
+                    try:
+                        hand_dates.append(y["label"])
+                    except KeyError:
+                        continue
+            for y in x["role"]:
+                hand_roles.append(y["value"])
+        item["hand_roles"] = hand_roles
+        item["hand_dates"] = hand_dates
         try:
             swork = value["title_work"][0]
         except IndexError:
